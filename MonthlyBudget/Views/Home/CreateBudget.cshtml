@@ -1,0 +1,55 @@
+﻿@model MonthlyBudget.Models.BudgetItem
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+    <h2>@ViewBag.Err</h2>
+        <form asp-action="CreateBudget" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="Category"></label></td>
+                    <td><select asp-for="Category" asp-items=ViewBag.Categories></select></td>
+                    <td><span asp-validation-for="Category"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Amount"></label></td>
+                    <td><input asp-for="Amount"></td>
+                    <td><span asp-validation-for="Amount"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Month"></label></td>
+                    <td><select asp-for="Month" asp-items=ViewBag.Months  ></select></td>
+                    <td><span asp-validation-for="Month"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Year"></label></td>
+                    <td><select asp-for="Year" asp-items=ViewBag.Years></select></td>
+                    <td><span asp-validation-for="Year"></span></td>
+                </tr>
+                
+            </table>
+            <input type="submit" value="Create" />
+            
+        </form>
+        <a asp-area="" asp-controller="Home" asp-action="CreateCategory">Add Categories</a>
+        <table>
+            <thead>
+                <tr><td>Category</td><td>Amount</td><td></td></tr>
+            </thead>
+            <tbody>
+                @foreach (var i in ViewBag.BudgetItems)
+                {
+                    <tr>
+                        <td>@i.Category</td>
+                        <td>@i.Amount</td>
+                        <td><form asp-action="DeleteBudget" method="post">
+                            <input type="hidden" name="Category" value="@i.Category" />
+                                <input type="hidden" name="Amount" value="@i.Amount" />
+                                <input type="hidden" name="Month" value="@Model.Month" />
+                                <input type="hidden" name="Year" value="@Model.Year" />
+                                <input type="submit" value="delete"/>jkjhk
+                            </form></td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        

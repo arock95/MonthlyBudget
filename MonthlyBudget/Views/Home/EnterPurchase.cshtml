@@ -1,0 +1,28 @@
+﻿@model MonthlyBudget.Models.Purchase
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>@ViewBag.err</h2>
+<form asp-action="EnterPurchase" method="post">
+    <table>
+        <thead>
+            <tr>
+                <td>Category</td>
+                <td>Item</td>
+                <td>Amount</td>
+                <td>Date</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><select asp-for="Category" asp-items=ViewBag.Categories></select></td>
+                <td><input asp-for="PurchaseName"></td>
+                <td><input asp-for="Cost"></td>
+                <td><select asp-for="Month" asp-items=ViewBag.Months></select>
+                    <select asp-for="Year" asp-items=ViewBag.Years></select></td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="submit" />
+
+</form>

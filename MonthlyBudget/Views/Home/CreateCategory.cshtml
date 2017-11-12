@@ -1,0 +1,23 @@
+﻿@model MonthlyBudget.Models.Category
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+        <h1>Create a Category</h1>
+        <p>@ViewBag.err</p>
+        <form asp-action="CreateCategory" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="Name"></label></td>
+                    <td><input asp-for="Name"></td>
+                    <td><span asp-validation-for="Name"></span></td>
+                </tr>
+            </table>
+            <input type="submit" value="Create" />
+            <h3>Existing Categories</h3>
+            <table>
+                @foreach (string cat in ViewBag.Categories)
+                {
+                    <tr><td>@cat</td></tr>
+
+                }
+            </table>
+        </form>
