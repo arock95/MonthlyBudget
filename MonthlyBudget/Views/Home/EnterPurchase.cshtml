@@ -1,5 +1,23 @@
-﻿@model MonthlyBudget.Models.Purchase
+﻿@model MonthlyBudget.Models.ViewModels.PurchaseViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link href="~/lib/jquery-ui/themes/black-tie/jquery-ui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/datetimepicker/jquery.datetimepicker.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+    //$.noConflict(true);
+    $.noConflict();
+    jQuery(document).ready(function ($) {
+        $(function () {
+            $('#datetimepicker').datepicker();
+        });
+    });
+</script> 
+
+ 
 
 <h2>@ViewBag.err</h2>
 <form asp-action="EnterPurchase" method="post">
@@ -17,8 +35,7 @@
                 <td><select asp-for="Category" asp-items=ViewBag.Categories></select></td>
                 <td><input asp-for="PurchaseName"></td>
                 <td><input asp-for="Cost"></td>
-                <td><select asp-for="Month" asp-items=ViewBag.Months></select>
-                    <select asp-for="Year" asp-items=ViewBag.Years></select></td>
+                <td>@Html.TextBox("datetimepicker")</td>
                 
             </tr>
         </tbody>
@@ -26,3 +43,4 @@
     <input type="submit" value="submit" />
 
 </form>
+

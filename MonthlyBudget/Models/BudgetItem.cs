@@ -18,10 +18,7 @@ namespace MonthlyBudget.Models
         [Required]
         public int Amount { get; set; }
 
-        [Required]
-        public int Month { get; set; }
-
-        [Required]
-        public int Year { get; set; }
+        public int BudgetMonth { get; set; }
+        public int BudgetYear { get; set; }
     }
 }

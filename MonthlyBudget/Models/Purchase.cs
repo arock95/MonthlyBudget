@@ -20,10 +20,7 @@ namespace MonthlyBudget.Models
         public string Category { get; set; }
 
         [Required]
-        public int Month { get; set; }
-
-        [Required]
-        public int Year { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         public string User { get; set; }
     }
