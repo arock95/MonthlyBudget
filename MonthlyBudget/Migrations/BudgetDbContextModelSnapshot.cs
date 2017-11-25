@@ -23,14 +23,14 @@ namespace MonthlyBudget.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<int>("BudgetMonth");
+
+                    b.Property<int>("BudgetYear");
+
                     b.Property<string>("Category")
                         .IsRequired();
 
-                    b.Property<int>("Month");
-
                     b.Property<string>("User");
-
-                    b.Property<int>("Year");
 
                     b.HasKey("Id");
 
@@ -63,14 +63,12 @@ namespace MonthlyBudget.Migrations
 
                     b.Property<int>("Cost");
 
-                    b.Property<int>("Month");
+                    b.Property<DateTime>("PurchaseDate");
 
                     b.Property<string>("PurchaseName")
                         .IsRequired();
 
                     b.Property<string>("User");
-
-                    b.Property<int>("Year");
 
                     b.HasKey("Id");
 

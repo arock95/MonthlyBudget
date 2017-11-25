@@ -9,7 +9,7 @@ namespace MonthlyBudget.Services
     public interface IPurchaseSvc
     {
         void Add(Purchase newPurchase);
-        List<Purchase> FindByMonth(int month, int year, string user);
+        List<Purchase> FindByMonth(DateTime PurchaseDate, string user);
         int Commit();                       //writes the changes to the database
         bool Remove(Purchase pur);
     }

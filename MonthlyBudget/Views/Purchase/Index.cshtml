@@ -1,0 +1,64 @@
+﻿@model MonthlyBudget.Models.ViewModels.PurchaseViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link href="~/lib/jquery-ui/themes/black-tie/jquery-ui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/datetimepicker/jquery.datetimepicker.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function ($) {
+        $(function () {
+            $('#PurchaseDate').datepicker();
+        });
+    });
+</script> 
+
+<h2>@ViewBag.err</h2>
+<form asp-action="Index" method="post">
+    <table>
+        <tr>
+            <td>Date</td>
+            <td><input asp-for="PurchaseDate"/></td>
+        </tr>
+        <tr><td>Category</td><td><select asp-for="Category" asp-items="new SelectList(Model.Categories)"></select></td></tr>
+        <tr>
+            <td>Item</td>
+            <td><input asp-for="PurchaseName"></td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td><input asp-for="Cost"></td>
+        </tr>
+
+    </table>
+    <input type="submit" value="submit" />
+</form>
+
+<h2>Purchases for Month / Year</h2>
+<table>
+    <tbody>
+    @foreach (var i in Model.Purchases)
+    {
+        <tr>
+            <td>@i.Category</td>
+            <td>@i.PurchaseName</td>
+            <td>$@i.Cost</td>
+            <td>@i.PurchaseDate.ToString("dd MMM yyyy")</td>
+            <td><form asp-action="DeletePurchase" method="post">
+                    <input type="hidden" name="Cost" value="@i.Cost"/>
+                    <input type="hidden" name="PurchaseName" value="@i.PurchaseName<"/>
+                    <input type="hidden" name="Category" value="@i.Category"/>
+                    <input type="hidden" name="PurchaseDate" value="@i.PurchaseDate"/>
+                    <input type="submit" value="Delete"/>
+                </form> 
+            </td>
+        </tr>
+
+    }
+    </tbody>
+
+</table>
+
