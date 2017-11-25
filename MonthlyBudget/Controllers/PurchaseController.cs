@@ -112,7 +112,7 @@ namespace MonthlyBudget.Controllers
                 if (_purchases.Remove(purchase) == true)
                 {
                     _purchases.Commit();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { m=pur.PurchaseDate.Month, y=pur.PurchaseDate.Year});
                 }
                 else
                 {
