@@ -37,8 +37,8 @@
     <input type="submit" value="submit" />
 </form>
 
-<h2>Purchases for Month / Year</h2>
-<table>
+<h2>Purchases for @ViewBag.m / @ViewBag.y</h2>
+<table class="table table-striped">
     <tbody>
     @foreach (var i in Model.Purchases)
     {

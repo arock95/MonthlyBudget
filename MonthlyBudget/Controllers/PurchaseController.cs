@@ -29,8 +29,18 @@ namespace MonthlyBudget.Controllers
         public IActionResult Index(string err, int? m, int? y)
         {
             DateTime LookupMonth;
-            if (m.HasValue && y.HasValue) { LookupMonth = new DateTime((int)y, (int)m, 1); }
-            else LookupMonth = DateTime.Now;
+            if (m.HasValue && y.HasValue)
+            {
+                LookupMonth = new DateTime((int)y, (int)m, 1);
+                ViewBag.m = m;
+                ViewBag.y = y;
+            }
+            else
+            {
+                LookupMonth = DateTime.Now;
+                ViewBag.m = LookupMonth.Month;
+                ViewBag.y = LookupMonth.Year;
+            }
             
 
             var ViewModel = new PurchaseViewModel {
