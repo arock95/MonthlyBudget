@@ -47,8 +47,8 @@ namespace MonthlyBudget
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddDbContext<BudgetDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BudgetDb")));
+             services.AddDbContext<BudgetDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("BudgetDb")));
 
             services.AddSingleton<ICategorySvc, SqlCategoryData>();
             services.AddSingleton<IBudgetItemSvc, SqlBudgetItemData>();

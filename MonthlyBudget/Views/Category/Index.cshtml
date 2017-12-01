@@ -22,7 +22,7 @@
             <input type="submit" value="Create" />
             <div><a asp-area="" asp-controller="Budget" asp-action="Index">Back to Create a Budget</a></div>
             <h3>Existing Categories</h3>
-            <table>
+            <table class="table table-striped">
                 @foreach (string cat in Model.UserCategories)
                 {
                     <tr><td>@cat</td></tr>

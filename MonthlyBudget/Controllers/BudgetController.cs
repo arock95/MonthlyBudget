@@ -45,6 +45,13 @@ namespace MonthlyBudget.Controllers
                 ViewModel.BudgetYear = DateTime.Now.Year;
 
             ViewModel.BudgetItems = _budgets.FindAll(User.Identity.Name, ViewModel.BudgetMonth, ViewModel.BudgetYear);
+            ViewModel.BudgetItems = ViewModel.BudgetItems.OrderBy(x => x.Category).ToList();
+            int TotalBudgetedAmount = 0;
+            foreach (var b in ViewModel.BudgetItems)
+            {
+                TotalBudgetedAmount += b.Amount;
+            }
+            ViewModel.BudgetItems.Add(new BudgetItem { Category = "Total", Amount=TotalBudgetedAmount});
 
             ViewBag.Err = err;
 
