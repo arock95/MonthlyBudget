@@ -32,6 +32,13 @@ namespace MonthlyBudget.Services
                                         && x.PurchaseDate.Year == PurchaseDate.Year && x.User == user).ToList();
         }
 
+        public List<Purchase> FindByMonthAndCategory(DateTime PurchaseDate, string user, string category)
+        {
+            return _db.Purchases.Where(x => x.PurchaseDate.Month == PurchaseDate.Month
+                                        && x.PurchaseDate.Year == PurchaseDate.Year && x.User == user && 
+                                        x.Category == category).ToList();
+        }
+
         public bool Remove(Purchase pur)
         {
             var removeThis = _db.Purchases.FirstOrDefault(x => x.User == pur.User && x.PurchaseDate.Year==pur.PurchaseDate.Year &&
