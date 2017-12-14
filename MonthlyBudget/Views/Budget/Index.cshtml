@@ -48,7 +48,7 @@
     </form>
     <a asp-area="" asp-controller="Category" asp-action="Index">Add Categories</a>
 
-    <h2 id="something">Current budget for @Model.BudgetMonth @Model.BudgetYear</h2>
+    <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
     <table class="table table-striped">
         <thead>
             <tr><td><strong>Category</strong></td><td><strong>Amount</strong></td><td></td></tr>
@@ -59,13 +59,20 @@
                 <tr>
                     <td>@i.Category</td>
                     <td>@i.Amount</td>
-                    <td><form asp-action="DeleteBudget" method="post">
-                        <input type="hidden" name="Category" value="@i.Category" />
-                            <input type="hidden" name="Amount" value="@i.Amount" />
-                            <input type="hidden" name="BudgetMonth" value="@i.BudgetMonth" />
-                            <input type="hidden" name="BudgetYear" value="@i.BudgetYear" />
-                            <input type="submit" value="delete"/>
-                        </form></td>
+                    @if (i.Category != "Total")
+                    {
+                        <td>
+                            <form asp-action="DeleteBudget" method="post">
+                                <input type="hidden" name="Category" value="@i.Category" />
+                                <input type="hidden" name="Amount" value="@i.Amount" />
+                                <input type="hidden" name="BudgetMonth" value="@i.BudgetMonth" />
+                                <input type="hidden" name="BudgetYear" value="@i.BudgetYear" />
+                                <input type="submit" value="delete" />
+                            </form>
+                        </td>
+
+                    }
+                    
                 </tr>
 
             }
@@ -73,6 +80,7 @@
     </table>
 
 <script>
+    //needed to update link to different month/years
     jQuery(document).ready(function () {
         jQuery('#BudgetYear').change(function () {
             a = document.getElementById('changemonth');
@@ -90,6 +98,5 @@
         });
 
     });
-    
-</script>
 
+</script>

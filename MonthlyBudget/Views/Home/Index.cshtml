@@ -1,5 +1,34 @@
-﻿@{
+﻿@model MonthlyBudget.Models.ViewModels.ReportViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<form asp-action="Index" method="post">
+    <input asp-for="month" />
+    <input asp-for="year" />
 
-this is where stuff goes for stuff
+</form>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Category</td>
+            <td>Budgeted $</td>
+            <td>Total Spent</td>
+            <td>Difference</td>
+        </tr>
+    </thead>
+    @foreach (var r in Model.ReportItems)
+    {
+        <tr>
+            <td>@r.CategoryName</td>
+            <td>@r.BudgetAmount</td>
+            <td>@r.SpentAmount</td>
+            <td>@r.Difference</td>
+        </tr>
+
+    }
+    
+
+</table>
