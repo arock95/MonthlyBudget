@@ -62,8 +62,15 @@ namespace MonthlyBudget.Controllers
                 };
                 ViewModel.ReportItems.Add(report);
             }
-            ViewModel.ReportItems.Add(new ReportItem {CategoryName="Total", BudgetAmount=totalBudget,
-                                                      SpentAmount =totalSpent, Difference=totalBudget-totalSpent });
+            
+            ViewModel.ReportItems = ViewModel.ReportItems.OrderBy(x => x.CategoryName).ToList();
+            ViewModel.ReportItems.Add(new ReportItem
+            {
+                CategoryName = "Total",
+                BudgetAmount = totalBudget,
+                SpentAmount = totalSpent,
+                Difference = totalBudget - totalSpent
+            });
 
             return View(ViewModel);
         }
