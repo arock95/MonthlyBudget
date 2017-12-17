@@ -39,6 +39,14 @@
 
 <h2>Purchases for @ViewBag.m / @ViewBag.y</h2>
 <table class="table table-striped">
+    <thead>
+        <tr class="tableheader">
+            <td>Category</td>
+            <td>Purchase</td>
+            <td>Amount</td>
+            <td>Date</td>
+        </tr>
+    </thead>
     <tbody>
     @foreach (var i in Model.Purchases)
     {

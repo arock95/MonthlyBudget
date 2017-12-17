@@ -51,7 +51,7 @@
     <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
     <table class="table table-striped">
         <thead>
-            <tr><td><strong>Category</strong></td><td><strong>Amount</strong></td><td></td></tr>
+            <tr class="tableheader"><td>Category</td><td>Amount</td><td></td></tr>
         </thead>
         <tbody>
             @foreach (var i in Model.BudgetItems)

@@ -3,16 +3,31 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<h1>Change Month</h1>
 <form asp-action="Index" method="post">
-    <input asp-for="month" />
-    <input asp-for="year" />
+    <select name="Month" id="Month">
+        @foreach (var i in Model.Months)
+        {
+            if (i.Key == Model.Month)
+            {
+                <option value="@i.Key" selected="selected">@i.Value</option>
+            }
 
+            else
+            {
+                <option value="@i.Key">@i.Value</option>
+            }
+        }
+    </select>
+
+    <select asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
+    <input type="submit" name="submit" value="submit" />
 </form>
 
 
 <table class="table table-striped">
     <thead>
-        <tr>
+        <tr class="tableheader">
             <td>Category</td>
             <td>Budgeted $</td>
             <td>Total Spent</td>

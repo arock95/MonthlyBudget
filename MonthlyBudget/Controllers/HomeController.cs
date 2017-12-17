@@ -29,15 +29,18 @@ namespace MonthlyBudget.Controllers
         [HttpGet]
         public IActionResult Index(int? m, int? y)
         {
-            var ViewModel = new ReportViewModel();
+            var ViewModel = new ReportViewModel
+            {
+                Month = (m.HasValue) ? (int)m : DateTime.Now.Month,
+                Year = (y.HasValue) ? (int)y : DateTime.Now.Year
+            };
 
-            ViewModel.month = (m.HasValue) ? (int)m : DateTime.Now.Month;
-            ViewModel.year = (y.HasValue) ? (int)y : DateTime.Now.Year;
+            List<BudgetItem> bud = _budgets.FindAll(User.Identity.Name, ViewModel.Month, ViewModel.Year);
+            int totalBudget = 0, totalSpent = 0;
 
-            List<BudgetItem> bud = _budgets.FindAll(User.Identity.Name, ViewModel.month, ViewModel.year);
             foreach (var b in bud)
             {
-                List<Purchase> pur = _purchases.FindByMonthAndCategory(new DateTime(ViewModel.year, ViewModel.month, 1), User.Identity.Name,
+                List<Purchase> pur = _purchases.FindByMonthAndCategory(new DateTime(ViewModel.Year, ViewModel.Month, 1), User.Identity.Name,
                     b.Category);
                 var sum = 0;
                 foreach (var p in pur)
@@ -47,6 +50,9 @@ namespace MonthlyBudget.Controllers
                         sum += p.Cost;
                     }
                 }
+                totalSpent += sum;
+                totalBudget += b.Amount;
+
                 var report = new ReportItem()
                 {
                     CategoryName = b.Category,
@@ -56,11 +62,20 @@ namespace MonthlyBudget.Controllers
                 };
                 ViewModel.ReportItems.Add(report);
             }
+            ViewModel.ReportItems.Add(new ReportItem {CategoryName="Total", BudgetAmount=totalBudget,
+                                                      SpentAmount =totalSpent, Difference=totalBudget-totalSpent });
 
             return View(ViewModel);
         }
 
-        public IActionResult Error()
+        [Authorize]
+        [HttpPost]
+        public IActionResult Index(int Month, int Year)
+        {
+            return RedirectToAction("Index", new {m=Month, y=Year });
+        }
+
+            public IActionResult Error()
         {
             return View();
         }
