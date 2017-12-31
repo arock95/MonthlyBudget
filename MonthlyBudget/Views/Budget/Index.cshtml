@@ -46,6 +46,13 @@
         <input type="submit" value="Create" />
             
     </form>
+
+    <form asp-action="CopyLastMonth" method="post">
+        <input type="hidden" name="BudgetMonth" value=@Model.BudgetMonth />
+        <input type="hidden" name="BudgetYear" value=@Model.BudgetYear />
+        <label >Copy last month's budget: </label><input type="submit" value="copy" />
+    </form>
+
     <a asp-area="" asp-controller="Category" asp-action="Index">Add Categories</a>
 
     <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
