@@ -1,5 +1,49 @@
-﻿@{
+﻿@model MonthlyBudget.Models.ViewModels.ReportViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<h1>Change Month</h1>
+<form asp-action="Index" method="post">
+    <select name="Month" id="Month">
+        @foreach (var i in Model.Months)
+        {
+            if (i.Key == Model.Month)
+            {
+                <option value="@i.Key" selected="selected">@i.Value</option>
+            }
 
-this is where stuff goes for stuff
+            else
+            {
+                <option value="@i.Key">@i.Value</option>
+            }
+        }
+    </select>
+
+    <select asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
+    <input type="submit" name="submit" value="submit" />
+</form>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr class="tableheader">
+            <td>Category</td>
+            <td>Budgeted $</td>
+            <td>Total Spent</td>
+            <td>Difference</td>
+        </tr>
+    </thead>
+    @foreach (var r in Model.ReportItems)
+    {
+        <tr>
+            <td>@r.CategoryName</td>
+            <td>@r.BudgetAmount</td>
+            <td>@r.SpentAmount</td>
+            <td>@r.Difference</td>
+        </tr>
+
+    }
+    
+
+</table>

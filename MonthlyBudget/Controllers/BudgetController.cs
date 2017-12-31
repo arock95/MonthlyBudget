@@ -99,12 +99,55 @@ namespace MonthlyBudget.Controllers
             if (_budgets.Remove(budget) == true)
             {
                 _budgets.Commit();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { m = bud.BudgetMonth, y = bud.BudgetYear });
             }
             else
             {
-                return RedirectToAction("Index", new { err = "Unable to remove item" });
+                return RedirectToAction("Index", new { err = "Unable to remove item", m=bud.BudgetMonth, y=bud.BudgetYear });
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult CopyLastMonth(int BudgetMonth, int BudgetYear)
+        {
+            // figure out 'last month/yr'
+            int lastMonth, lastYear;
+
+            if (BudgetMonth == 1)
+            {
+                lastMonth = 12;
+                lastYear = BudgetYear -1;
+            }
+            else
+            {
+                lastMonth = BudgetMonth - 1;
+                lastYear = BudgetYear;
+            }
+
+            var lastMonthsBudget = _budgets.FindAll(User.Identity.Name, lastMonth, lastYear);
+            var thisMonthsBudget = _budgets.FindAll(User.Identity.Name, BudgetMonth, BudgetYear);
+
+            if (lastMonthsBudget.Count == 0) { return RedirectToAction("Index", new { err = "No budget for last month!", m=BudgetMonth,
+                                                                        y=BudgetYear}); }
+
+            // first delete this month's budget
+            foreach (var b in thisMonthsBudget)
+            {
+                _budgets.Remove(new BudgetItem {Category=b.Category, Amount=b.Amount, User=User.Identity.Name,
+                                                BudgetMonth = b.BudgetMonth, BudgetYear=b.BudgetYear});
+            }
+
+            // then copy last month's budget to this month's
+            foreach (var b in lastMonthsBudget)
+            {
+                _budgets.Add(new BudgetItem { Category = b.Category, Amount=b.Amount, User = User.Identity.Name, BudgetYear = BudgetYear,
+                                            BudgetMonth = BudgetMonth});
+                
+            }
+            _budgets.Commit();
+            return RedirectToAction("Index", new { m=BudgetMonth, y=BudgetYear});
+        }
+
     }
 }
