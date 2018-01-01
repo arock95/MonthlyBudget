@@ -81,29 +81,11 @@
                     }
                     
                 </tr>
-
             }
         </tbody>
     </table>
 
-<script>
-    //needed to update link to different month/years
-    jQuery(document).ready(function () {
-        jQuery('#BudgetYear').change(function () {
-            a = document.getElementById('changemonth');
-            var m = document.getElementById('BudgetMonth').value;
-            var y = document.getElementById('BudgetYear').value;
-            a.setAttribute('href', '/Budget/Index?m=' + m + '&y=' + y);
-
-        });
-        jQuery('#BudgetMonth').change(function () {
-            a = document.getElementById('changemonth');
-            var m = document.getElementById('BudgetMonth').value;
-            var y = document.getElementById('BudgetYear').value;
-            a.setAttribute('href', '/Budget/Index?m=' + m + '&y=' + y);
-
-        });
-
-    });
-
-</script>
+@section Scripts
+{
+    <script src="@Url.Content("~/js/budget/budget.js")" type="text/javascript"></script>
+}
