@@ -4,6 +4,10 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 <h2>@ViewBag.Err</h2>
+
+<a asp-controller="Home" asp-action="Index" id="previous">Previous</a>
+<a asp-controller="Home" asp-action="Index" id="next">Next</a>
+
     <form asp-action="Index" method="post">
         <table>
             <tr>
@@ -103,6 +107,33 @@
             a.setAttribute('href', '/Budget/Index?m=' + m + '&y=' + y);
 
         });
+
+        var prev = document.getElementById('previous');
+        var next = document.getElementById('next');
+
+        var prevm = @Model.BudgetMonth;
+        var nextm = @Model.BudgetMonth;
+        var prevy = @Model.BudgetYear;
+        var nexty = @Model.BudgetYear;
+
+        if (@Model.BudgetMonth == 1) {
+            prevm = 12;
+            nextm++;
+            prevy--;
+        }
+        else if (@Model.BudgetMonth == 12){
+            nextm = 1;
+            nexty++;
+            prevm--;
+        }
+        else {
+            prevm--;
+            nextm++;
+        }
+
+
+        prev.setAttribute('href', '/Budget/Index?m=' + prevm + '&y=' + prevy);
+        next.setAttribute('href', '/Budget/Index?m=' + nextm + '&y=' + nexty);
 
     });
 

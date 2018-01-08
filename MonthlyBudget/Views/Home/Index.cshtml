@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <h1>Change Month</h1>
+
+<a asp-controller="Home" asp-action="Index" id="previous">Previous</a>
+<a asp-controller="Home" asp-action="Index" id="next">Next</a>
+
 <form asp-action="Index" method="post">
     <select name="Month" id="Month">
         @foreach (var i in Model.Months)
@@ -47,3 +54,35 @@
     
 
 </table>
+
+<script>
+    //needed to update link to different month/years
+    jQuery(document).ready(function () {
+        var prev = document.getElementById('previous');
+        var next = document.getElementById('next');
+
+        var prevm = @Model.Month;
+        var nextm = @Model.Month;
+        var prevy = @Model.Year;
+        var nexty = @Model.Year;
+
+        if (@Model.Month == 1) {
+            prevm = 12;
+            nextm++;
+            prevy--;
+        }
+        else if (@Model.Month == 12){
+            nextm = 1;
+            nexty++;
+            prevm--;
+        }
+        else {
+            prevm--;
+            nextm++;
+        }
+
+
+        prev.setAttribute('href', '/Home/Index?m=' + prevm + '&y=' + prevy);
+        next.setAttribute('href', '/Home/Index?m=' + nextm + '&y=' + nexty);
+    });
+</script>
