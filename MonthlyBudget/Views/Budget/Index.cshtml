@@ -57,7 +57,7 @@
         <label >Copy last month's budget: </label><input type="submit" value="copy" />
     </form>
 
-    <a asp-area="" asp-controller="Category" asp-action="Index">Add Categories</a>
+    <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-month="@Model.BudgetMonth" asp-route-year="@Model.BudgetYear">Add Categories</a>
 
     <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
     <table class="table table-striped">

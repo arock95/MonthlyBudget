@@ -12,6 +12,8 @@
 
         }
         <form asp-action="Index" method="post">
+            <input type="hidden" value="@Model.NavigateBackMonth" asp-for="NavigateBackMonth" />
+            <input type="hidden" value="@Model.NavigateBackYear" asp-for="NavigateBackYear" />
             <table>
                 <tr>
                     <td><label asp-for="Name"></label></td>
@@ -20,7 +22,7 @@
                 </tr>
             </table>
             <input type="submit" value="Create" />
-            <div><a asp-area="" asp-controller="Budget" asp-action="Index">Back to Create a Budget</a></div>
+            <div><a asp-area="" asp-controller="Budget" asp-action="Index" asp-route-m="@Model.NavigateBackMonth" asp-route-y="@Model.NavigateBackYear">Back to Create a Budget</a></div>
             <h3>Existing Categories</h3>
             <table class="table table-striped">
                 @foreach (string cat in Model.UserCategories)
