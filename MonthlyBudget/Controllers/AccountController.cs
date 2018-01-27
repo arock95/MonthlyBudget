@@ -71,7 +71,7 @@ namespace MonthlyBudget.Controllers
             if (ModelState.IsValid)
             {
                 string EncodedResponse = Request.Form["g-Recaptcha-Response"];
-                bool success = true; // CaptchaResponse.Validate(EncodedResponse);
+                bool success = CaptchaResponse.Validate(EncodedResponse);
 
                 if (success) {
                     // This doesn't count login failures towards account lockout
