@@ -9,7 +9,8 @@
       "wwwroot/css/siteOverrides.css",
       "wwwroot/css/home.css",
       "wwwroot/css/login.css",
-      "wwwroot/css/budget.css"
+      "wwwroot/css/budget.css",
+      "wwwroot/css/category.css"
     ]
   },
   {
