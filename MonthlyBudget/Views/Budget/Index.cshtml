@@ -5,59 +5,82 @@
 
 <h2>@ViewBag.Err</h2>
 
-<a asp-controller="Budget" asp-action="Index" id="previous">Previous</a>
-<a asp-controller="Budget" asp-action="Index" id="next">Next</a>
+<div class="budget-page">
+    <ul class="pager">
+        <li><a asp-controller="Budget" asp-action="Index" id="previous">Previous</a></li>
+        <li><a asp-controller="Budget" asp-action="Index" id="next">Next</a></li>
+    </ul>
+    <div class="budget-page__top row">
+        <div class="budget-page__top-left col-sm-6">
+            <form asp-action="Index" method="post" class="form-horizontal">
+                <div class="budget-page__change-month-form">
+                    <div class="form-group">
+                        <label asp-for="BudgetMonth" class="col-sm-2"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="BudgetMonth" id="BudgetMonth">
+                                @foreach (var i in Model.Months)
+                                {
+                                    if (i.Key == Model.BudgetMonth)
+                                    {
+                                        <option value="@i.Key" selected="selected">@i.Value</option>
+                                    }
 
-    <form asp-action="Index" method="post">
-        <table>
-            <tr>
-                <td><label asp-for="BudgetMonth"></label></td>
-                <td><select name="BudgetMonth" id="BudgetMonth">
-                        @foreach (var i in Model.Months)
-                        {
-                            if (i.Key == Model.BudgetMonth)
-                            {
-                                <option value="@i.Key" selected="selected">@i.Value</option>
-                            }
+                                    else
+                                    {
+                                        <option value="@i.Key">@i.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BudgetYear" class="col-sm-2"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="BudgetYear" asp-items="new SelectList(Model.Years)" class="form-control"></select>
+                        </div>
+                    </div>
+                    <a asp-controller="Budget" asp-action="Index" id="changemonth" class="btn btn-info">Change Month</a>
+                </div>
 
-                            else
-                            {
-                                <option value="@i.Key">@i.Value</option>
-                            }
-                        }
-                    </select></td>
-            </tr>
-            <tr>
-                <td><label asp-for="BudgetYear"></label></td>
-                <td><select asp-for="BudgetYear" asp-items="new SelectList(Model.Years)"></select></td>
-            </tr>
-            
-            <tr><td><a asp-controller="Budget" asp-action="Index" id="changemonth">change month</a></td></tr>
+                <div class="budget-page__submit-form">
+                    <div class="form-group">
+                        <label asp-for="Category" class="col-sm-2"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="Category" asp-items="new SelectList(Model.Categories)" class="form-control"></select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span asp-validation-for="Category"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount" class="col-sm-2"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Amount" class="form-control">
+                        </div>
+                        <div class="col-sm-1">
+                            <span asp-validation-for="Amount"></span>
+                        </div>
+                    </div>
 
-            <tr>
-                <td><label asp-for="Category"></label></td>
-                <td><select asp-for="Category" asp-items="new SelectList(Model.Categories)"  ></select></td>
-                <td><span asp-validation-for="Category"></span></td>
-            </tr>
-            <tr>
-                <td><label asp-for="Amount"></label></td>
-                <td><input asp-for="Amount"></td>
-                <td><span asp-validation-for="Amount"></span></td>
-            </tr>
-                
-                
-        </table>
-        <input type="submit" value="Create" />
-            
-    </form>
-
-    <form asp-action="CopyLastMonth" method="post">
-        <input type="hidden" name="BudgetMonth" value=@Model.BudgetMonth />
-        <input type="hidden" name="BudgetYear" value=@Model.BudgetYear />
-        <label >Copy last month's budget: </label><input type="submit" value="copy" />
-    </form>
-
-    <a asp-area="" asp-controller="Category" asp-action="Index">Add Categories</a>
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="budget-page__top-right col-sm-3 col-sm-offset-3 panel panel-default">
+            <div class="panel-body">
+                <div>
+                    <form asp-action="CopyLastMonth" method="post">
+                        <input type="hidden" name="BudgetMonth" value=@Model.BudgetMonth />
+                        <input type="hidden" name="BudgetYear" value=@Model.BudgetYear />
+                        <input type="submit" value="Copy Last Month" class="btn btn-info btn-block" />
+                    </form>
+                </div>
+                <div>
+                    <a asp-area="" asp-controller="Category" asp-action="Index" class="btn btn-info btn-block">Add Categories</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
     <table class="table table-striped">
@@ -78,7 +101,7 @@
                                 <input type="hidden" name="Amount" value="@i.Amount" />
                                 <input type="hidden" name="BudgetMonth" value="@i.BudgetMonth" />
                                 <input type="hidden" name="BudgetYear" value="@i.BudgetYear" />
-                                <input type="submit" value="delete" />
+                                <input type="submit" value="delete" class="btn btn-danger" />
                             </form>
                         </td>
 
@@ -88,6 +111,7 @@
             }
         </tbody>
     </table>
+</div>
 
 @section Scripts
 {

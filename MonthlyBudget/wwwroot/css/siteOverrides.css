@@ -1,0 +1,11 @@
+﻿input[type="submit"] {
+    max-width: 100%;
+}
+
+@media screen and (max-width: 425px) {
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+    }
+}

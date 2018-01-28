@@ -1,55 +1,63 @@
 ﻿@model MonthlyBudget.Models.ViewModels.ReportViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
-<h1>Change Month</h1>
 
-<a asp-controller="Home" asp-action="Index" id="previous">Previous</a>
-<a asp-controller="Home" asp-action="Index" id="next">Next</a>
-<form asp-action="Index" method="post">
-    <select name="Month" id="Month">
-        @foreach (var i in Model.Months)
+<div class="home-page">
+    <h1>@ViewData["Title"]</h1>
+
+    <ul class="pager">
+        <li><a asp-controller="Home" asp-action="Index" id="previous">Previous</a></li>
+        <li><a asp-controller="Home" asp-action="Index" id="next">Next</a></li>
+    </ul>
+
+    <div class="form-container">
+        <form class="form-inline month-form" asp-action="Index" method="post">
+            <div class="form-group">
+                <select class="form-control" name="Month" id="Month">
+                    @foreach (var i in Model.Months)
+                    {
+                        if (i.Key == Model.Month)
+                        {
+                            <option value="@i.Key" selected="selected">@i.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@i.Key">@i.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control" asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
+            </div>
+
+            <input type="submit" name="submit" value="View" class="btn btn-primary month-btn" />
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="tableheader">
+                <td>Category</td>
+                <td>Budgeted $</td>
+                <td>Total Spent</td>
+                <td>Difference</td>
+            </tr>
+        </thead>
+        @foreach (var r in Model.ReportItems)
         {
-            if (i.Key == Model.Month)
-            {
-                <option value="@i.Key" selected="selected">@i.Value</option>
-            }
-
-            else
-            {
-                <option value="@i.Key">@i.Value</option>
-            }
+            <tr>
+                <td>@r.CategoryName</td>
+                <td>@r.BudgetAmount</td>
+                <td>@r.SpentAmount</td>
+                <td>@r.Difference</td>
+            </tr>
         }
-    </select>
+    </table>
+</div>
 
-    <select asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
-    <input type="submit" name="submit" value="submit" />
-</form>
-
-
-<table class="table table-striped">
-    <thead>
-        <tr class="tableheader">
-            <td>Category</td>
-            <td>Budgeted $</td>
-            <td>Total Spent</td>
-            <td>Difference</td>
-        </tr>
-    </thead>
-    @foreach (var r in Model.ReportItems)
-    {
-        <tr>
-            <td>@r.CategoryName</td>
-            <td>@r.BudgetAmount</td>
-            <td>@r.SpentAmount</td>
-            <td>@r.Difference</td>
-        </tr>
-
-    }
-    
-
-</table>
 
 @section Scripts
 {
