@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MonthlyBudget.Models;
 using MonthlyBudget.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using MonthlyBudget.Models.ViewModels;
 
@@ -21,11 +17,13 @@ namespace MonthlyBudget.Controllers
         // ******************* CATEGORIES ******************
         [HttpGet]
         [Authorize]
-        public IActionResult Index(string err)
+        public IActionResult Index(string err, int? month, int? year)
         {
             CategoryViewModel CatViewModel = new CategoryViewModel
             {
                 UserCategories = _categories.FindAll(User.Identity.Name).ToList(),
+                NavigateBackMonth = month,
+                NavigateBackYear = year,
                 Error = err
             };
             CatViewModel.UserCategories.Sort();
@@ -43,7 +41,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Index([Bind(include: "Name")]CategoryViewModel cat)
+        public IActionResult Index([Bind(include: "Name, NavigateBackMonth, NavigateBackYear")]CategoryViewModel cat)
         {
             // if the modelstate is okay and the category doesn't already exist
             // add it to the database
@@ -59,13 +57,27 @@ namespace MonthlyBudget.Controllers
                 {
                     _categories.Add(category);
                     _categories.Commit();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new
+                    {
+                        month = cat.NavigateBackMonth,
+                        year = cat.NavigateBackYear
+                    });
                 }
-                return RedirectToAction("Index", new { err = "Category already exists" });
+
+                return RedirectToAction("Index", new
+                {
+                    err = "Category already exists",
+                    month = cat.NavigateBackMonth,
+                    year = cat.NavigateBackYear
+                });
             }
             // otherwise, redirect back to the form, and send the error message
-            return RedirectToAction("Index", new { err = "Category names must be between 5 and 50 characters long, and can only contain " +
-                "letters, numbers and spaces" });
+            return RedirectToAction("Index", new
+            {
+                err = "Category names must be between 5 and 50 characters long, and can only contain letters, numbers and spaces",
+                month = cat.NavigateBackMonth,
+                year = cat.NavigateBackYear
+            });
         }
     }
 }

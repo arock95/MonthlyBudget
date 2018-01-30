@@ -10,11 +10,11 @@
             <p>@Model.Error</p>
 
         }
-
-
     }
 
     <form asp-action="Index" method="post" class="form-horizontal category-page__form">
+        <input type="hidden" value="@Model.NavigateBackMonth" asp-for="NavigateBackMonth" />
+        <input type="hidden" value="@Model.NavigateBackYear" asp-for="NavigateBackYear" />
         <div class="form-group">
             <label asp-for="Name" class="col-sm-2"></label>
             <div class="col-sm-9">
@@ -27,7 +27,14 @@
         <div><input type="submit" value="Create" class="btn btn-primary" /></div>
     </form>
 
-    <div><a asp-area="" asp-controller="Budget" asp-action="Index" class="btn btn-warning">Back to Create a Budget</a></div>
+    <div>
+        <a class="btn btn-warning"
+           asp-area=""
+           asp-controller="Budget"
+           asp-action="Index"
+           asp-route-m="@Model.NavigateBackMonth"
+           asp-route-y="@Model.NavigateBackYear">Back to Create a Budget</a>
+    </div>
 
     <h3>Existing Categories</h3>
     <table class="table table-striped">
