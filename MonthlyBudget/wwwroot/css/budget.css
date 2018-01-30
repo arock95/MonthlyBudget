@@ -1,0 +1,12 @@
+﻿.budget-page__top-right {
+    text-align: center;
+    margin: 0 15px;
+}
+
+.budget-page__top-right > .panel-body > div:first-child {
+    margin-bottom: 15px;
+}
+
+.budget-page__submit-form, .budget-page__change-month-form {
+    margin-bottom: 30px;
+}
