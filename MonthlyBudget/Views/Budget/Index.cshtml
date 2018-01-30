@@ -61,7 +61,6 @@
                             <span asp-validation-for="Amount"></span>
                         </div>
                     </div>
-
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
@@ -70,18 +69,22 @@
             <div class="panel-body">
                 <div>
                     <form asp-action="CopyLastMonth" method="post">
-                        <input type="hidden" name="BudgetMonth" value=@Model.BudgetMonth />
-                        <input type="hidden" name="BudgetYear" value=@Model.BudgetYear />
+                        <input type="hidden" name="BudgetMonth" value="@Model.BudgetMonth" />
+                        <input type="hidden" name="BudgetYear" value="@Model.BudgetYear" />
                         <input type="submit" value="Copy Last Month" class="btn btn-info btn-block" />
                     </form>
                 </div>
                 <div>
-                    <a asp-area="" asp-controller="Category" asp-action="Index" class="btn btn-info btn-block">Add Categories</a>
+                    <a class="btn btn-info btn-block"
+                       asp-area=""
+                       asp-controller="Category"
+                       asp-action="Index"
+                       asp-route-month="@Model.BudgetMonth"
+                       asp-route-year="@Model.BudgetYear">Add Categories</a>
                 </div>
             </div>
         </div>
     </div>
-
     <h2 id="something">Current budget for @Model.BudgetMonth / @Model.BudgetYear</h2>
     <table class="table table-striped">
         <thead>
