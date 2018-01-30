@@ -69,7 +69,8 @@
         <div class="budget-page__top-right col-sm-3 col-sm-offset-3 panel panel-default">
             <div class="panel-body">
                 <div>
-                    <form asp-action="CopyLastMonth" method="post">
+                    <form asp-action="CopyLastMonth" method="post" 
+                                        onsubmit="return confirm('Copying last month\'s budget will overwrite the existing budget.  Do you want to continue?');">
                         <input type="hidden" name="BudgetMonth" value=@Model.BudgetMonth />
                         <input type="hidden" name="BudgetYear" value=@Model.BudgetYear />
                         <input type="submit" value="Copy Last Month" class="btn btn-info btn-block" />

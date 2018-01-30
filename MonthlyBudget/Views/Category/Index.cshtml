@@ -33,7 +33,15 @@
     <table class="table table-striped">
         @foreach (string cat in Model.UserCategories)
         {
-            <tr><td>@cat</td></tr>
+            <tr>
+                <td>@cat</td>
+                <td>
+                    <form asp-action="DeleteCategory" method="post">
+                        <input type="hidden" name="Name" value="@cat" />
+                        <input type="submit" value="delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
 
         }
     </table>

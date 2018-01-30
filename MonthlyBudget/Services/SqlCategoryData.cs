@@ -37,5 +37,15 @@ namespace MonthlyBudget.Services
             return _db.Categories.Where(x => x.User == user).Select(x => x.Name).ToList();
         }
 
+        public bool Remove(Category cat)
+        {
+            var removeThis = _db.Categories.FirstOrDefault(x => x.Name == cat.Name && x.User == cat.User);
+            if (removeThis != null)
+            {
+                _db.Categories.Remove(removeThis);
+                return true;
+            }
+            else { return false; }
+        }
     }
 }
