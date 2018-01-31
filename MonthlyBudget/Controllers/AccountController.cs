@@ -53,7 +53,6 @@ namespace MonthlyBudget.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
-
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
