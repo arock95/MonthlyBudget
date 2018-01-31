@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MonthlyBudget.Models.ViewModels
 {
@@ -15,6 +12,10 @@ namespace MonthlyBudget.Models.ViewModels
         public string Name { get; set; }
 
         public List<string> UserCategories;
+
+        public int? NavigateBackMonth { get; set; }
+
+        public int? NavigateBackYear { get; set; }
 
         public string Error;
     }
