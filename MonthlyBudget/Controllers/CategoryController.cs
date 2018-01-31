@@ -79,5 +79,25 @@ namespace MonthlyBudget.Controllers
                 year = cat.NavigateBackYear
             });
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult DeleteCategory([Bind(include: "Name")]Category cat)
+        {
+            var remove = new Category {
+                Name = cat.Name,
+                User = User.Identity.Name
+            };
+            if (_categories.Remove(remove))
+            {
+                _categories.Commit();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index", new { err = "Could not delete category" });
+            }
+            
+        }
     }
 }
