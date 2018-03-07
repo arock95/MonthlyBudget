@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace MonthlyBudget.Services
 {
-    public interface IEmailSender
+    public class AuthMessageSenderOptions
     {
-        void SendEmailAsync(string email, string subject, string message);
+        public string MailgunKey { get; set; }
     }
 }
