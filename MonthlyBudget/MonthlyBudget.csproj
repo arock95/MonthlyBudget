@@ -6,6 +6,10 @@
     <UserSecretsId>aspnet-MonthlyBudget-6C5EA55D-2438-47C1-ADFF-04E3E8E554FE</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\AuthMessageSenderOptions.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
