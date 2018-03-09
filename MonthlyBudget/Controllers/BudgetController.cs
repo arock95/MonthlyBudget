@@ -60,6 +60,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(BudgetViewModel bud)
         {
             var Budget = new BudgetItem
@@ -87,6 +88,7 @@ namespace MonthlyBudget.Controllers
         // ******************* DELETES ******************
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteBudget(BudgetItem bud)
         {
             var budget = new BudgetItem
@@ -109,6 +111,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult CopyLastMonth(int BudgetMonth, int BudgetYear)
         {
             // figure out 'last month/yr'

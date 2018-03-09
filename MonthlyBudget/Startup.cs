@@ -70,16 +70,16 @@ namespace MonthlyBudget
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+              if (env.IsDevelopment())
+              {
+                  app.UseDeveloperExceptionPage();
+                  app.UseDatabaseErrorPage();
+                  app.UseBrowserLink();
+              }
+              else
+              {
+                  app.UseExceptionHandler("/Home/Error");
+              }
 
             app.UseStaticFiles();
 
@@ -92,7 +92,12 @@ namespace MonthlyBudget
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute( // catch errors
+                    "NotFound",
+                    "{*url}",
+                    new { controller = "Home", action = "Error" });
             });
+            
         }
     }
 }
