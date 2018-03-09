@@ -58,6 +58,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(PurchaseViewModel purchase)
         {
             
@@ -107,6 +108,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult DeletePurchase(Purchase pur)
         {
             if (ModelState.IsValid)

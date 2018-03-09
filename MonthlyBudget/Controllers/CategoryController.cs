@@ -41,6 +41,7 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult Index([Bind(include: "Name, NavigateBackMonth, NavigateBackYear")]CategoryViewModel cat)
         {
             // if the modelstate is okay and the category doesn't already exist
@@ -82,6 +83,7 @@ namespace MonthlyBudget.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteCategory([Bind(include: "Name")]Category cat)
         {
             var remove = new Category {
