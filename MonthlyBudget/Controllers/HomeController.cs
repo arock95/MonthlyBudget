@@ -82,8 +82,6 @@ namespace MonthlyBudget.Controllers
             return RedirectToAction("Index", new {m=Month, y=Year });
         }
 
-        [Authorize]
-        [HttpGet]
         public IActionResult Error()
         {
             return View();
