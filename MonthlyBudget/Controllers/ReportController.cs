@@ -48,11 +48,11 @@ namespace MonthlyBudget.Controllers
             {
                 if (Category == "*")
                 {
-                    viewModel.Purchases = _purchases.FindAllByDateRange(FromDt, ToDt);
+                    viewModel.Purchases = _purchases.FindAllByDateRange(FromDt, ToDt, User.Identity.Name);
                 }
                 else
                 {
-                    viewModel.Purchases = _purchases.FindByCategoryAndDateRange(FromDt, ToDt, Category);
+                    viewModel.Purchases = _purchases.FindByCategoryAndDateRange(FromDt, ToDt, Category, User.Identity.Name);
                 }
             }
             else

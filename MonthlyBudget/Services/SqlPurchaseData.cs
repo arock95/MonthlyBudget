@@ -26,14 +26,15 @@ namespace MonthlyBudget.Services
             return _db.SaveChanges();
         }
 
-        public List<Purchase> FindAllByDateRange(DateTime From, DateTime To)
+        public List<Purchase> FindAllByDateRange(DateTime From, DateTime To, string User)
         {
-            return _db.Purchases.Where(x => x.PurchaseDate >= From && x.PurchaseDate <= To).OrderBy(x=>x.Category).ToList();
+            return _db.Purchases.Where(x => x.PurchaseDate >= From && x.PurchaseDate <= To && x.User == User).OrderBy(x=>x.Category).ToList();
         }
 
-        public List<Purchase> FindByCategoryAndDateRange(DateTime From, DateTime To, string category)
+        public List<Purchase> FindByCategoryAndDateRange(DateTime From, DateTime To, string category, string User)
         {
-            return _db.Purchases.Where(x => x.PurchaseDate >= From && x.PurchaseDate <= To && x.Category == category).ToList();
+            return _db.Purchases.Where(x => x.PurchaseDate >= From && x.PurchaseDate <= To 
+                                    && x.Category == category && x.User == User).ToList();
         }
 
         public List<Purchase> FindByMonth(DateTime PurchaseDate, string user)
