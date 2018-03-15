@@ -11,6 +11,7 @@ using MonthlyBudget.Models.ViewModels;
 
 namespace MonthlyBudget.Controllers
 {
+    [Authorize]
     public class PurchaseController:Controller
     {
         private ICategorySvc _categories;
@@ -25,7 +26,6 @@ namespace MonthlyBudget.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Index(string err, int? m, int? y)
         {
             DateTime LookupMonth;
@@ -48,7 +48,9 @@ namespace MonthlyBudget.Controllers
                 Categories = _categories.FindAll(User.Identity.Name),
                 PurchaseDate = DateTime.Now.ToString("MM/dd/yyyy")
             };
+            
             ViewModel.Categories.Sort();
+            
             ViewModel.Purchases = ViewModel.Purchases.OrderBy(x => x.Category).ToList();
 
             ViewBag.err = err;
@@ -57,7 +59,6 @@ namespace MonthlyBudget.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Index(PurchaseViewModel purchase)
         {
@@ -107,7 +108,6 @@ namespace MonthlyBudget.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePurchase(Purchase pur)
         {

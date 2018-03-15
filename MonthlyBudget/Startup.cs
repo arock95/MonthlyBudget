@@ -78,7 +78,7 @@ namespace MonthlyBudget
               }
               else
               {
-                  app.UseExceptionHandler("/Home/Error");
+                  app.UseExceptionHandler("/Home/Error"); // catch errors, send to home/error
               }
 
             app.UseStaticFiles();

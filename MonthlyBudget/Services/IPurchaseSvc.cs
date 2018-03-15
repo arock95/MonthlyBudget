@@ -13,5 +13,7 @@ namespace MonthlyBudget.Services
         List<Purchase> FindByMonthAndCategory(DateTime PurchaseDate, string user, string category);
         int Commit();                       //writes the changes to the database
         bool Remove(Purchase pur);
+        List<Purchase> FindByCategoryAndDateRange(DateTime From, DateTime To, string category);
+        List<Purchase> FindAllByDateRange(DateTime From, DateTime To);
     }
 }

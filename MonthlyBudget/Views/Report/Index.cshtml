@@ -1,0 +1,61 @@
+﻿@model MonthlyBudget.Models.ViewModels.AllPurchaseViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link href="~/lib/jquery-ui/themes/black-tie/jquery-ui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-tablesorter/jquery.tablesorter.js"></script>
+<script src="~/lib/datetimepicker/jquery.datetimepicker.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+<form method="post" action="/report/Index">
+    @Html.AntiForgeryToken()
+    From Date:<input class="form-control" id="FromDate" asp-for="FromDate" /><br />
+    To Date:<input class="form-control" id="ToDate" asp-for="ToDate" /><br />
+    Category:<select class="form-control" id="Category" asp-for="Category" asp-items="new SelectList(Model.Categories)"></select><br />
+    <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+
+@{ 
+    if(Model.Purchases.Count > 0)
+    {
+        <h2>Total Spent: $@Model.Total</h2>
+        <table class="table table-striped" id="myTable">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Purchase Name</th>
+                    <th>Purchase Amount</th>
+                    <th>Purchase Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var p in Model.Purchases)
+                {
+                    <tr>
+                        <td>@p.Category</td>
+                        <td>@p.PurchaseName</td>
+                        <td>@p.Cost</td>
+                        <td>@p.PurchaseDate.ToString("dd MMM yyyy")</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+
+@section Scripts{ 
+    <script>
+        $.noConflict();
+        $(document).ready(function () {
+            $(function () {
+                $('#FromDate').datepicker();
+                $('#ToDate').datepicker();
+                $("#myTable").tablesorter();
+            });
+        });
+    </script>
+    
+}
