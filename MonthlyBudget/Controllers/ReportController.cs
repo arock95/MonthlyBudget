@@ -41,10 +41,9 @@ namespace MonthlyBudget.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(string ToDate, string FromDate, string Category)
         {
-            DateTime ToDt, FromDt;
             var viewModel = new AllPurchaseViewModel();
 
-            if (DateTime.TryParse(ToDate, out ToDt) && DateTime.TryParse(FromDate, out FromDt))
+            if (DateTime.TryParse(ToDate, out DateTime ToDt) && DateTime.TryParse(FromDate, out DateTime FromDt))
             {
                 if (Category == "*")
                 {
