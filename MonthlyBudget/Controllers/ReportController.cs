@@ -13,27 +13,31 @@ namespace MonthlyBudget.Controllers
     public class ReportController : Controller
     {   // Dependency injection
         private ICategorySvc _categories;
-        private IBudgetItemSvc _budgets;
+
         private IPurchaseSvc _purchases;
 
-        public ReportController(ICategorySvc categories, IBudgetItemSvc budgets, IPurchaseSvc purchases)
+        public ReportController(ICategorySvc categories, IPurchaseSvc purchases)
         {
             _categories = categories;
-            _budgets = budgets;
             _purchases = purchases;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string err)
         {
             var viewModel = new AllPurchaseViewModel
             {
                 Categories = _categories.FindAll(User.Identity.Name),
-                FromDate = DateTime.Now.ToString("MM/dd/yyyy"), // eventually set to 1st of month
-                ToDate = DateTime.Now.ToString("MM/dd/yyyy") // eventually set to end of month
+                ToDate = DateTime.Now.ToString("MM/dd/yyyy"),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("MM/dd/yyyy")
             };
             viewModel.Categories.Add("*");
             viewModel.Categories.Sort();
+            if (err != "")
+            {
+                ViewBag.err = err;
+            }
+
             return View(viewModel);
         }
 
@@ -43,25 +47,36 @@ namespace MonthlyBudget.Controllers
         {
             var viewModel = new AllPurchaseViewModel();
 
-            if (DateTime.TryParse(ToDate, out DateTime ToDt) && DateTime.TryParse(FromDate, out DateTime FromDt))
+            if (DateTime.TryParse(ToDate, out DateTime ToDt) && DateTime.TryParse(FromDate, out DateTime FromDt) && 
+                ToDt  > FromDt)
             {
+                viewModel.Categories = _categories.FindAll(User.Identity.Name); // duplicate code, lazy
                 if (Category == "*")
                 {
                     viewModel.Purchases = _purchases.FindAllByDateRange(FromDt, ToDt, User.Identity.Name);
                 }
                 else
                 {
-                    viewModel.Purchases = _purchases.FindByCategoryAndDateRange(FromDt, ToDt, Category, User.Identity.Name);
+                    if (viewModel.Categories.Contains(Category))
+                    {
+                        viewModel.Purchases = _purchases.FindByCategoryAndDateRange(FromDt, ToDt, Category, User.Identity.Name);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { err = "Invalid category" });
+                    }
+                    
                 }
             }
             else
             {
                 //dates are in bad format...redirect with error msg
+                return RedirectToAction("Index", new { err="Invalid dates" });
             }
 
             viewModel.FromDate = FromDate;
             viewModel.ToDate = ToDate;
-            viewModel.Categories = _categories.FindAll(User.Identity.Name); // duplicate code, lazy
+            
             viewModel.Categories.Add("*");
             viewModel.Categories.Sort();
 

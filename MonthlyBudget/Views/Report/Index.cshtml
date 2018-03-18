@@ -7,6 +7,11 @@
 <script src="~/lib/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="~/lib/jquery-ui/jquery-ui.js"></script>
 
+@if(ViewBag.err != "")
+{
+    <h2>@ViewBag.err</h2>
+}
+
 <form method="post" action="/report/Index">
     @Html.AntiForgeryToken()
     From Date:<input class="form-control" id="FromDate" asp-for="FromDate" /><br />
