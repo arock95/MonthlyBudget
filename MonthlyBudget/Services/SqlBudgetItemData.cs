@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MonthlyBudget.Models;
 using MonthlyBudget.Data;
+using MonthlyBudget.Services;
 
 namespace MonthlyBudget.Services
 {
@@ -35,7 +36,22 @@ namespace MonthlyBudget.Services
 
         public List<BudgetItem> FindAll(string user, int month, int year)
         {
+
             return _db.BudgetItems.Where(x => x.User == user && x.BudgetMonth == month &&
+                                        x.BudgetYear == year).ToList();
+        }
+
+        public List<BudgetItem> FindAllRange(string user, int month, int year, int fromMonth, int fromYear)
+        {
+            if (year != fromYear)
+            {
+                DateTime to = Helper.ReturnToDate(month, year);
+                DateTime from = new DateTime(fromYear, fromMonth, 1);
+
+                return _db.BudgetItems.Where(x=>x.User == user).ToList().Where(x => new DateTime(x.BudgetYear,x.BudgetMonth,1) >= from &&
+                                            new DateTime(x.BudgetYear, x.BudgetMonth, 1) <= to).ToList();
+            }
+            return _db.BudgetItems.Where(x => x.User == user && x.BudgetMonth <= month && x.BudgetMonth >= fromMonth &&
                                         x.BudgetYear == year).ToList();
         }
 

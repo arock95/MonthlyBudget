@@ -14,9 +14,9 @@
 
 <form method="post" action="/report/Index">
     @Html.AntiForgeryToken()
-    From Date:<input class="form-control" id="FromDate" asp-for="FromDate" /><br />
-    To Date:<input class="form-control" id="ToDate" asp-for="ToDate" /><br />
-    Category:<select class="form-control" id="Category" asp-for="Category" asp-items="new SelectList(Model.Categories)"></select><br />
+    <b>From Date</b><input class="form-control" id="FromDate" asp-for="FromDate" /><br />
+    <b>To Date</b><input class="form-control" id="ToDate" asp-for="ToDate" /><br />
+    <b>Category</b><select class="form-control" id="Category" asp-for="Category" asp-items="new SelectList(Model.Categories)"></select><br />
     <input type="submit" value="Submit" class="btn btn-primary" />
 </form>
 

@@ -71,7 +71,7 @@ namespace MonthlyBudget.Controllers
             {
                 string EncodedResponse = Request.Form["g-Recaptcha-Response"];
                 bool success = CaptchaResponse.Validate(EncodedResponse);
-
+                //bool success = true; // for zap test!
                 if (success) {
                     // This doesn't count login failures towards account lockout
                     // To enable password failures to trigger account lockout, set lockoutOnFailure: true

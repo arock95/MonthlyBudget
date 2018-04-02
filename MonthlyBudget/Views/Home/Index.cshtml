@@ -6,38 +6,54 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery-tablesorter/jquery.tablesorter.js"></script>
-
+<h2>@ViewBag.Err</h2>
 <div class="home-page">
-
     <ul class="pager">
         <li><a asp-controller="Home" asp-action="Index" id="previous">Previous</a></li>
         <li><a asp-controller="Home" asp-action="Index" id="next">Next</a></li>
     </ul>
 
-    <div class="form-container">
-        <form class="form-inline month-form" asp-action="Index" method="post">
-            <div class="form-group">
-                <select class="form-control" name="Month" id="Month">
-                    @foreach (var i in Model.Months)
+    <form class="form-horizontal" asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="FromMonth" >From</label>
+            <select class="form-control" name="FromMonth" id="FromMonth">
+                @foreach (var i in Model.Months)
+                {
+                    if (i.Key == Model.FromMonth)
                     {
-                        if (i.Key == Model.Month)
-                        {
-                            <option value="@i.Key" selected="selected">@i.Value</option>
-                        }
-                        else
-                        {
-                            <option value="@i.Key">@i.Value</option>
-                        }
+                        <option value="@i.Key" selected="selected">@i.Value</option>
                     }
-                </select>
-            </div>
-            <div class="form-group">
-                <select class="form-control" asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
-            </div>
+                    else
+                    {
+                        <option value="@i.Key">@i.Value</option>
+                    }
+                }
+            </select>
+            <select class="form-control" asp-for="FromYear" asp-items="new SelectList(Model.Years)"></select>
+        </div>
 
+
+        <div class="form-group">
+            <label for="Month">Through</label>
+            <select class="form-control" name="Month" id="Month">
+                @foreach (var i in Model.Months)
+                {
+                    if (i.Key == Model.Month)
+                    {
+                        <option value="@i.Key" selected="selected">@i.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@i.Key">@i.Value</option>
+                    }
+                }
+            </select>
+            <select class="form-control" asp-for="Year" asp-items="new SelectList(Model.Years)"></select>
             <input type="submit" name="submit" value="View" class="btn btn-primary month-btn" />
-        </form>
-    </div>
+        </div>
+
+        
+    </form>
 
     <table id="mytable" class="table table-striped tablesorter">
         <thead>
@@ -83,8 +99,36 @@
 
 @section Scripts
 {
+    <!--
     <script src="@Url.Content("~/js/budget/prevNext.js")" type="text/javascript"></script>
+        -->
     <script type="text/javascript">
+        function prevNextLinks(mon, yr, cont) {
+            var prev = document.getElementById('previous');
+            var next = document.getElementById('next');
+
+            var prevm = mon;
+            var nextm = mon;
+            var prevy = yr;
+            var nexty = yr;
+
+            if (mon == 1) {
+                prevm = 12;
+                nextm++;
+                prevy--;
+            }
+            else if (mon == 12) {
+                nextm = 1;
+                nexty++;
+                prevm--;
+            }
+            else {
+                prevm--;
+                nextm++;
+            }
+            prev.setAttribute('href', '/' + cont + '/Index?m=' + prevm + '&y=' + prevy + '&fm=' + prevm + '&fy=' + prevy);
+            next.setAttribute('href', '/' + cont + '/Index?m=' + nextm + '&y=' + nexty + '&fm=' + nextm + '&fy=' + nexty);
+        }
         prevNextLinks(@Model.Month, @Model.Year, "Home");
     </script>
 }
