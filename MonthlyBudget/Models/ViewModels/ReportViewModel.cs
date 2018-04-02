@@ -10,6 +10,8 @@ namespace MonthlyBudget.Models.ViewModels
     {
         public int Month { get; set; }
         public int Year { get; set; }
+        public int FromMonth { get; set; }
+        public int FromYear { get; set; }
 
         public List<ReportItem> ReportItems = new List<ReportItem>();
 

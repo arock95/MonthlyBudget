@@ -100,7 +100,8 @@
                     @if (i.Category != "Total")
                     {
                         <td>
-                            <form asp-action="DeleteBudget" method="post">
+                            <form asp-action="DeleteBudget" method="post"
+                                   onsubmit="return confirm('Deleting a budget item will not delete any associated purchases, but it will prevent them from showing up in reports.  Do you want to delete? ');">
                                 <input type="hidden" name="Category" value="@i.Category" />
                                 <input type="hidden" name="Amount" value="@i.Amount" />
                                 <input type="hidden" name="BudgetMonth" value="@i.BudgetMonth" />

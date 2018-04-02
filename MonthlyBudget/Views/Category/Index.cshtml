@@ -44,7 +44,7 @@
                 <td>@cat</td>
                 <td>
                     <form asp-action="DeleteCategory" method="post" 
-                    onsubmit="return confirm('Deleting a category will not delete any associated purchases, but it will prevent them from showing up in reports.  Do you want to delete? ');">
+                          onsubmit="return confirm('Deleting a category won\'t delete purchases but will limit the ability to see purchases in reports. Are you sure you want to delete?');">
                         <input type="hidden" name="Name" value="@cat" />
                         <input type="submit" value="delete" class="btn btn-danger" />
                     </form>
