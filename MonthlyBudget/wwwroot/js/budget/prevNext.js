@@ -21,6 +21,6 @@
         prevm--;
         nextm++;
     }
-    prev.setAttribute('href', '/' + cont + '/Index?m=' + prevm + '&y=' + prevy + '&fm=' + prevm + '&fy=' + prevy);
-    next.setAttribute('href', '/' + cont + '/Index?m=' + nextm + '&y=' + nexty + '&fm=' + nextm + '&fy=' + nexty);
+    prev.setAttribute('href', '/' + cont + '/Index?m=' + prevm + '&y=' + prevy );
+    next.setAttribute('href', '/' + cont + '/Index?m=' + nextm + '&y=' + nexty );
 }
