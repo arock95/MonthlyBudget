@@ -77,4 +77,8 @@
 @section Scripts
 {
     <script src="@Url.Content("~/js/purchase/purchase.js")" type="text/javascript"></script>
+    <script>
+        const cost = document.querySelector('#cost');
+        cost.addEventListener('click', function (e) { if (cost.value == 0) { cost.value = ""; } });
+    </script>
 }

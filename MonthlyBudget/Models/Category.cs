@@ -10,7 +10,7 @@ namespace MonthlyBudget.Models
     {
         public long Id { get; set; }
 
-        [Required, MinLength(5), MaxLength(50)]
+        [Required, MaxLength(50)]
         [Display(Name="Category Name")]
         public string Name { get; set; }
 

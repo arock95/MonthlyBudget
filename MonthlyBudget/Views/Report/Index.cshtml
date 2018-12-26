@@ -41,6 +41,15 @@
                         <td>@p.PurchaseName</td>
                         <td>@p.Cost</td>
                         <td>@p.PurchaseDate.ToString("dd MMM yyyy")</td>
+                        <td>
+                            <form asp-controller="Purchase" asp-action="DeletePurchase" method="post">
+                                <input type="hidden" name="Cost" value="@p.Cost" />
+                                <input type="hidden" name="PurchaseName" value="@p.PurchaseName<" />
+                                <input type="hidden" name="Category" value="@p.Category" />
+                                <input type="hidden" name="PurchaseDate" value="@p.PurchaseDate" />
+                                <input type="submit" class="btn btn-danger" value="delete" />
+                            </form>
+                        </td>
                     </tr>
 
                 }
