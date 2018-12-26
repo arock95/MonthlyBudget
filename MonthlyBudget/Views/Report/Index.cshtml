@@ -42,11 +42,13 @@
                         <td>@p.Cost</td>
                         <td>@p.PurchaseDate.ToString("dd MMM yyyy")</td>
                         <td>
-                            <form asp-controller="Purchase" asp-action="DeletePurchase" method="post">
+                            <form asp-controller="Purchase" asp-action="DeletePurchase" method="post" onsubmit="return confirm('Are you sure you want to delete this purchase?');">
                                 <input type="hidden" name="Cost" value="@p.Cost" />
                                 <input type="hidden" name="PurchaseName" value="@p.PurchaseName<" />
                                 <input type="hidden" name="Category" value="@p.Category" />
                                 <input type="hidden" name="PurchaseDate" value="@p.PurchaseDate" />
+                                <input type="hidden" name="act" value="Index" />
+                                <input type="hidden" name="cont" value="Report" />
                                 <input type="submit" class="btn btn-danger" value="delete" />
                             </form>
                         </td>

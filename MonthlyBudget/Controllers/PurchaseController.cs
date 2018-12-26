@@ -109,10 +109,17 @@ namespace MonthlyBudget.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePurchase(Purchase pur)
+        public IActionResult DeletePurchase(Purchase pur, string act, string cont)
         {
+            /*
+             * deletes purchases from the database on form post
+             * redirects to cont/act -- later should customize a little more for redirects
+             */
             if (ModelState.IsValid)
             {
+                var a = act != null ? act : "Index";
+                var c = cont != null ? cont : "Purchase";
+
                 var purchase = new Purchase
                 {
                     Category = pur.Category,
@@ -124,11 +131,13 @@ namespace MonthlyBudget.Controllers
                 if (_purchases.Remove(purchase) == true)
                 {
                     _purchases.Commit();
-                    return RedirectToAction("Index", new { m=pur.PurchaseDate.Month, y=pur.PurchaseDate.Year});
+                    //return RedirectToAction("Index", new { m=pur.PurchaseDate.Month, y=pur.PurchaseDate.Year});
+                    return RedirectToAction(a, c, new { m = pur.PurchaseDate.Month, y = pur.PurchaseDate.Year });
                 }
                 else
                 {
-                    return RedirectToAction("Index", new { err = "Unable to remove item" });
+                    //return RedirectToAction("Index", new { err = "Unable to remove item" });
+                    return RedirectToAction(a, c, new { err = "Unable to remove item" });
                 }
 
             }

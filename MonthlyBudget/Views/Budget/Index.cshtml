@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label asp-for="Amount" class="col-sm-2"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Amount" class="form-control">
+                            <input asp-for="Amount" class="form-control" id="amount">
                         </div>
                         <div class="col-sm-1">
                             <span asp-validation-for="Amount"></span>
@@ -123,6 +123,8 @@
     <script src="@Url.Content("~/js/budget/budget.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/budget/prevNext.js")" type="text/javascript"></script>
     <script type="text/javascript">
+        const cost = document.querySelector('#amount');
+        cost.addEventListener('click', function (e) { if (cost.value == 0) { cost.value = ""; } });
         prevNextLinks(@Model.BudgetMonth, @Model.BudgetYear, "Budget");
     </script>
 }
